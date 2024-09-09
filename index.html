@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head></head>
-
-    <body>
-        <video id='video' controls width="800" height="600" autoplay="true" muted="true"></video>
-        <script>
-            fetch(
-    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4" 
-)
-.then((videoResponse) => {
-  videoResponse.blob().then((blobData) => {
-    blobData.arrayBuffer().then((blobArray) => {
-      const videoBlob = new Blob([blobArray], { type: "video/mp4" });
-      const videoSrc = URL.createObjectURL(videoBlob);
-      console.log(videoSrc, 'video src');
-      const videoElement = document.getElementById('video');
-      videoElement.src = videoSrc;
-      setTimeout(() => {
-      	videoElement.play();
-      }, 200);
-    });
-   })
-});
+    <head>
+        <script src="jquery-3.7.1.min.js">
         </script>
-    </body>
-    
+        <script>
+$(document).ready(function(){$('body').append($('<video>', {id: 'video'})); })
 
+    $(document).ready(function(){$('#video').css({'position': 'absolute', 'width': '100%', 'height': 'auto'})
 
+    .on({
+
+        canplay: function()
+
+        {
+
+            $('#video')[0].currentTime = 0;
+
+            $('#video')
+
+                .off('canplay')
+
+                .attr({'controls': true, 'controlsList': 'nodownload fullscreen'})
+
+                .trigger('play');
+
+       }
+
+    })
+
+.attr({'src': 'movie.mp4'})
+
+    .trigger('load');})
+        </script>
+    </head>
+<body>
+
+</body>
 </html>
